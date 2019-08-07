@@ -11,13 +11,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 
+import java.util.Vector;
+
 public class BrownianMotion extends ApplicationAdapter {
     GL20 gl;
     ShapeRenderer renderer;
     private Thread fps;
     private int fpsCounter;
 	BMObject object;
-    private void startFpsCounter() {
+    Vector<BMObject> objects;
+
+	private void startFpsCounter() {
         fpsCounter = 0;
         Runnable task = new Runnable() {
             @Override
@@ -38,27 +42,37 @@ public class BrownianMotion extends ApplicationAdapter {
 
     @Override
     public void create() {
+		gl = Gdx.graphics.getGL20();
+		renderer = new ShapeRenderer();
         startFpsCounter();
+		objects = new Vector<BMObject>();
 
-        object = new BMObject(Color.RED, 20, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-        gl = Gdx.graphics.getGL20();
-        renderer = new ShapeRenderer();
+        // create particles
+		int step = (20 + 10) * 2; // радиус частицы + расстояние между ними
+		for (int i=20; i <= Gdx.graphics.getHeight() - 20; i += step)
+		{
+			for (int j=20; j <= Gdx.graphics.getWidth() - 20; j += step)
+			{
+				objects.add(new BMObject(Color.RED, 20, j, i));
+			}
+		}
     }
 
     private void draw(ShapeRenderer renderer) {
-        renderer.circle(object.getCoordinates()[0], object.getCoordinates()[1], object.radius);
-		fpsCounter++;
+		for (BMObject object : objects)
+		{
+			renderer.setColor(object.color);
+			renderer.circle(object.getCoordinates()[0], object.getCoordinates()[1], object.radius);
+		}
+        fpsCounter++;
     }
 
     @Override
     public void render() {
         gl.glClearColor(0, 0, 0, 0);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        renderer.setColor(object.color);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         draw(renderer);
-        object.move();
         renderer.end();
     }
 }
