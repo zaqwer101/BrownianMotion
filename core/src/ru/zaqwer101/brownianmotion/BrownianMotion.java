@@ -16,7 +16,7 @@ public class BrownianMotion extends ApplicationAdapter {
     ShapeRenderer renderer;
     private Thread fps;
     private int fpsCounter;
-
+	BMObject object;
     private void startFpsCounter() {
         fpsCounter = 0;
         Runnable task = new Runnable() {
@@ -39,12 +39,14 @@ public class BrownianMotion extends ApplicationAdapter {
     @Override
     public void create() {
         startFpsCounter();
+
+        object = new BMObject(Color.RED, 20, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
         gl = Gdx.graphics.getGL20();
         renderer = new ShapeRenderer();
     }
 
     private void draw(ShapeRenderer renderer) {
-        renderer.circle(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 100);
+        renderer.circle(object.getCoordinates()[0], object.getCoordinates()[1], object.radius);
 		fpsCounter++;
     }
 
@@ -53,9 +55,10 @@ public class BrownianMotion extends ApplicationAdapter {
         gl.glClearColor(0, 0, 0, 0);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        renderer.setColor(Color.RED);
+        renderer.setColor(object.color);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         draw(renderer);
+        object.move();
         renderer.end();
     }
 }
