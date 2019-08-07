@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 
+import java.util.Random;
 import java.util.Vector;
 
 public class BrownianMotion extends ApplicationAdapter {
@@ -20,6 +21,8 @@ public class BrownianMotion extends ApplicationAdapter {
     private int fpsCounter;
 	BMObject object;
     Vector<BMObject> objects;
+
+    Color[] colors = new Color[] { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN };
 
 	private void startFpsCounter() {
         fpsCounter = 0;
@@ -53,7 +56,7 @@ public class BrownianMotion extends ApplicationAdapter {
 		{
 			for (int j=20; j <= Gdx.graphics.getWidth() - 20; j += step)
 			{
-				objects.add(new BMObject(Color.RED, 20, j, i));
+				objects.add(new BMObject(colors[new Random().nextInt(colors.length)], 20, j, i));
 			}
 		}
     }
@@ -61,6 +64,7 @@ public class BrownianMotion extends ApplicationAdapter {
     private void draw(ShapeRenderer renderer) {
 		for (BMObject object : objects)
 		{
+		    object.move(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			renderer.setColor(object.color);
 			renderer.circle(object.getCoordinates()[0], object.getCoordinates()[1], object.radius);
 		}

@@ -7,9 +7,9 @@ import ru.zaqwer101.brownianmotion.BrownianMotion;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.fullscreen = false;
-		config.height = 600;
-		config.width = 800;
+		config.fullscreen = true;
+		config.height = 768;
+		config.width = 1366;
 		new LwjglApplication(new BrownianMotion(), config);
 	}
 }
