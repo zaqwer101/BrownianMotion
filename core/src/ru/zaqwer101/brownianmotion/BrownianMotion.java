@@ -19,12 +19,12 @@ public class BrownianMotion extends ApplicationAdapter {
     ShapeRenderer renderer;
     private Thread fps;
     private int fpsCounter;
-	BMObject object;
+    BMObject object;
     Vector<BMObject> objects;
 
-    Color[] colors = new Color[] { Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN };
+    Color[] colors = new Color[]{Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN};
 
-	private void startFpsCounter() {
+    private void startFpsCounter() {
         fpsCounter = 0;
         Runnable task = new Runnable() {
             @Override
@@ -45,29 +45,26 @@ public class BrownianMotion extends ApplicationAdapter {
 
     @Override
     public void create() {
-		gl = Gdx.graphics.getGL20();
-		renderer = new ShapeRenderer();
+        gl = Gdx.graphics.getGL20();
+        renderer = new ShapeRenderer();
         startFpsCounter();
-		objects = new Vector<BMObject>();
+        objects = new Vector<BMObject>();
 
         // create particles
-		int step = (20 + 10) * 2; // радиус частицы + расстояние между ними
-		for (int i=20; i <= Gdx.graphics.getHeight() - 20; i += step)
-		{
-			for (int j=20; j <= Gdx.graphics.getWidth() - 20; j += step)
-			{
-				objects.add(new BMObject(colors[new Random().nextInt(colors.length)], 20, j, i));
-			}
-		}
+        int step = (20 + 10) * 2; // радиус частицы + расстояние между ними
+        for (int i = 20; i <= Gdx.graphics.getHeight() - 20; i += step) {
+            for (int j = 20; j <= Gdx.graphics.getWidth() - 20; j += step) {
+                objects.add(new BMObject(colors[new Random().nextInt(colors.length)], 20, j, i));
+            }
+        }
     }
 
     private void draw(ShapeRenderer renderer) {
-		for (BMObject object : objects)
-		{
-		    object.move(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			renderer.setColor(object.color);
-			renderer.circle(object.getCoordinates()[0], object.getCoordinates()[1], object.radius);
-		}
+        for (BMObject object : objects) {
+            object.move(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            renderer.setColor(object.color);
+            renderer.circle(object.getCoordinates()[0], object.getCoordinates()[1], object.radius);
+        }
         fpsCounter++;
     }
 

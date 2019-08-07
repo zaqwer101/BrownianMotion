@@ -15,8 +15,7 @@ public class BMObject {
     private static int _id = 0;
     int id;
 
-    public BMObject(Color color, int radius, int x, int y)
-    {
+    public BMObject(Color color, int radius, int x, int y) {
         position = new Vector2(x, y);
         this.color = color;
         this.radius = radius;
@@ -25,15 +24,12 @@ public class BMObject {
         velocity.rotate(new Random().nextInt(360));
     }
 
-    public float[] getCoordinates()
-    {
-        return new float[] { this.position.x, this.position.y };
+    public float[] getCoordinates() {
+        return new float[]{this.position.x, this.position.y};
     }
 
-    public void move(int maxx, int maxy)
-    {
-        if ((this.position.x > (maxx - radius)) || (this.position.x + velocity.x < radius))
-        {
+    public void move(int maxx, int maxy) {
+        if ((this.position.x > (maxx - radius)) || (this.position.x + velocity.x < radius)) {
             velocity.x = velocity.x * -1;
 
             // нормализуем позиции, чтобы не уходило в цикл :/
@@ -43,8 +39,7 @@ public class BMObject {
                 position.x = maxx - 1;
         }
 
-        if ((this.position.y > (maxy - radius)) || (this.position.y + velocity.y < radius))
-        {
+        if ((this.position.y > (maxy - radius)) || (this.position.y + velocity.y < radius)) {
             velocity.y = velocity.y * -1;
 
             if (position.y < radius)
